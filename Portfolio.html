@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hari Priya Katherla - Portfolio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f0f0f5;
+      color: #333;
+    }
+
+    header, footer {
+      background: #283593;
+      color: white;
+      text-align: center;
+      padding: 1.5em;
+    }
+
+    section {
+      padding: 20px;
+      margin: 15px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #3f51b5;
+    }
+
+    a {
+      color: #3f51b5;
+      text-decoration: none;
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background: #3f51b5;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #303f9f;
+    }
+
+    .project-box {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Hari Priya Katherla</h1>
+  <p>B.Tech CSE | Passionate about Software Development</p>
+</header>
+
+<section id="about">
+  <h2>About Me</h2>
+  <p>I’m a Computer Science undergraduate with a strong foundation in programming, algorithms, and web development. I'm passionate about creating applications that solve real-world problems efficiently.</p>
+</section>
+
+<section id="skills">
+  <h2>Skills</h2>
+  <ul>
+    <li>Languages: Python, Java</li>
+    <li>Web Development: HTML, CSS, JavaScript</li>
+    <li>Database: Basic DBMS</li>
+  </ul>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+
+  <div class="project-box">
+    <h3>1. Mood Matcher</h3>
+    <p><strong>Description:</strong> A web app that provides inspirational content based on the user's selected emotion.</p>
+    <p><strong>Technologies Used:</strong> HTML, CSS, JavaScript</p>
+
+    <select id="emotion">
+      <option value="">--Choose Emotion--</option>
+      <option value="happy">Happy</option>
+      <option value="sad">Sad</option>
+      <option value="angry">Angry</option>
+      <option value="anxious">Anxious</option>
+    </select>
+    <button onclick="showMoodContent()">Show Content</button>
+    <div id="mood-result" style="margin-top:10px;"></div>
+  </div>
+
+  <div class="project-box">
+    <h3>2. Theme Recommender</h3>
+    <p><strong>Description:</strong> Recommends a website theme based on user age and favorite singer using Euclidean distance.</p>
+    <p><strong>Technologies Used:</strong> HTML, CSS, JavaScript</p>
+
+    <input type="text" id="name" placeholder="Your Name" /><br/>
+    <input type="number" id="age" placeholder="Your Age" /><br/>
+    <input type="text" id="singer" placeholder="Favorite Singer" /><br/>
+    <button onclick="recommendTheme()">Recommend Theme</button>
+    <div id="theme-result" style="margin-top:10px;"></div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p>Email: haripriyakatherla@gmail.com</p>
+  <p>Phone: +91 8074913286</p>
+  <p><a href="https://www.linkedin.com/in/hari-priya-katherla-1559a02ba" target="_blank">LinkedIn Profile</a></p>
+</section>
+
+<footer>
+  <p>© 2025 Hari Priya Katherla</p>
+</footer>
+
+<script>
+  // Mood Matcher Logic
+  function showMoodContent() {
+    const emotion = document.getElementById("emotion").value;
+    const result = document.getElementById("mood-result");
+    const content = {
+      happy: "😊 Keep smiling! 'Happiness is a journey, not a destination.'",
+      sad: "🌧️ It's okay to feel down. 'This too shall pass.'",
+      angry: "🔥 Take a deep breath. 'Speak when you're angry and you'll make the best speech you'll ever regret.'",
+      anxious: "🌿 Stay calm. 'You don’t have to control your thoughts. Just stop letting them control you.'"
+    };
+    result.innerText = content[emotion] || "Please select an emotion.";
+  }
+
+  // Theme Recommender Logic
+  const dataset = [
+    {name: "Alice", age: 20, singer: "Taylor Swift", theme: "Elegant Pink"},
+    {name: "Bob", age: 22, singer: "Ed Sheeran", theme: "Warm Sunset"},
+    {name: "Charlie", age: 25, singer: "Adele", theme: "Royal Blue"},
+    {name: "David", age: 18, singer: "BTS", theme: "Neon Pop"},
+    {name: "Eva", age: 21, singer: "Billie Eilish", theme: "Dark Minimal"}
+  ];
+
+  function euclidean(a, b) {
+    return Math.sqrt(Math.pow(a.age - b.age, 2) + (a.singer.toLowerCase() !== b.singer.toLowerCase() ? 10 : 0));
+  }
+
+  function recommendTheme() {
+    const name = document.getElementById("name").value;
+    const age = parseInt(document.getElementById("age").value);
+    const singer = document.getElementById("singer").value;
+    const user = {name, age, singer};
+
+    if (!name || isNaN(age) || !singer) {
+      document.getElementById("theme-result").innerText = "Please fill all fields.";
+      return;
+    }
+
+    let minDist = Infinity, bestMatch = null;
+    for (const entry of dataset) {
+      const dist = euclidean(user, entry);
+      if (dist < minDist) {
+        minDist = dist;
+        bestMatch = entry;
+      }
+    }
+
+    document.getElementById("theme-result").innerHTML = `
+      <strong>Hi ${name}!</strong><br/>
+      Based on your preferences, we recommend the <em>${bestMatch.theme}</em> theme.
+    `;
+  }
+</script>
+
+</body>
+</html>
